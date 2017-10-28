@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            text-decoration: none;
+            list-style: none;
+            font-family: 华文行楷;
+        }
+        body{
+            background-color: #70eea8;
+        }
+        ul{
+            width: 1230px;
+            height: 280px;
+            background-color: #866b43;
+        }
+       ul li{
+            text-align: center;
+            float: left;
+           height: 250px;
+            margin-left: 8px;
+            margin-top: 20px;
+            width: 50px;
+        }
+        ul li:nth-child(even) a:hover{
+            box-shadow: 1px 1px 5px #FFF;
+            background-color: rgba(250,250,250,1);
+        }
+        ul li:nth-child(odd) a:hover{
+            box-shadow: 1px 1px 5px #000;
+            background-color: rgba(0,0,0,1);
+
+        }
+       ul li:nth-child(even){
+            background-color: rgba(250,250,250,0.8);
+        }
+        ul li:nth-child(even) a{
+            height: 250px;
+            color: black;
+            display: block;
+            font-size: 28px;
+        }
+        ul li:nth-child(odd){
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+        }
+        ul li:nth-child(odd) a{
+            height: 250px;
+            color: white;
+            display: block;
+            font-size: 28px;
+        }
+        #musiceStart{
+            width: 1226px;
+            height: 60px;
+            background-color: white;
+            border: 2px solid black;
+        }
+        #musiceStart input:nth-child(1){
+            border: none;
+            margin-top: 10px;
+            margin-left: 20px;
+            font-size: 23px;
+            height: 35px;
+            width: 900px;
+            background-image: url("./images/musicBackgroud.png");
+        }
+        #musiceStart input:nth-child(2){
+            margin-left: 10px;
+            background-color: #FFFFFF;
+            color: #000F;
+            height: 35px;
+            width: 150px;
+            font-size: 20px;
+        }
+    </style>
+<script src="jquery-1.12.4.js"></script>
+</head>
+<div id="max" align="center">
+<ul id="onKey">
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+    <li class="h"><a href="javascript:void(0);">♪</a></li>
+    <li class="y"><a href="javascript:void(0);">♬</a></li>
+</ul>
+
+<div id="dateMusice">
+    <audio src="./mp3/11.mp3"></audio>
+    <audio src="./mp3/12.mp3"></audio>
+    <audio src="./mp3/13.mp3"></audio>
+    <audio src="./mp3/14.mp3"></audio>
+    <audio src="./mp3/15.mp3"></audio>
+    <audio src="./mp3/16.mp3"></audio>
+    <audio src="./mp3/17.mp3"></audio>
+    <audio src="./mp3/21.mp3"></audio>
+    <audio src="./mp3/22.mp3"></audio>
+    <audio src="./mp3/23.mp3"></audio>
+    <audio src="./mp3/24.mp3"></audio>
+    <audio src="./mp3/25.mp3"></audio>
+    <audio src="./mp3/26.mp3"></audio>
+    <audio src="./mp3/27.mp3"></audio>
+    <audio src="./mp3/31.mp3"></audio>
+    <audio src="./mp3/32.mp3"></audio>
+    <audio src="./mp3/33.mp3"></audio>
+    <audio src="./mp3/34.mp3"></audio>
+    <audio src="./mp3/35.mp3"></audio>
+    <audio src="./mp3/36.mp3"></audio>
+    <audio src="./mp3/37.mp3"></audio>
+</div>
+<div id="musiceStart">
+    <input id="one" type="text" >
+    <input id="two" type="button" value="请开始你的表演">
+</div>
+</div>
+<body>
+<script>
+    /*
+    总共21个琴键
+     abcdefg   hijklmn   opqrstu        空格	:1秒
+     1234567   1234567   1234567		-	;2秒
+     下面带点   不带点	 上面带点		无设置	:0.5秒
+     */
+$(function () {
+    var musicArr = ['♩','♪','♫','♬','♭','☊'];
+    var reg = /[a-u]/;
+    var regtwo = /-/;
+    //输入框的操作
+    $('#one').keydown(function () {
+        //输入框的背景图
+        if ($('#one').val() != ''){
+            $('#one').css('background-image','none');
+        }else {
+            $('#one').css('background-image','url("./images/musicBackgroud.png")')
+        }
+    });
+
+    //开始按钮的操作
+    $('#two').click(function () {
+        var test = $('#one').val();
+        test == ''?test= 'hijh hijh jkl jkl lxmxlkj h lxmxlkj h i-e-h  i-e-h':test;
+
+        var idOne =   setInterval(function () {
+            var width = $(window).width();
+            var height = $(window).height();
+            var leftRound =Math.random() * width;
+            var musicRound =Math.floor(Math.random() * 6);
+            //音符上升特效
+            $('<span></span>')
+                .text(musicArr[musicRound]) //文本
+                .css({  //样式
+                    'color':getColor(),
+                    'position':'absolute',
+                    'top': height + 'px',
+                    'left':leftRound + 'px',
+                    'font-size':'40px'
+                }).animate({'top':'-60px'},5000,function(){
+                $(this).remove(); //删除已经用完的span标签
+            }).appendTo($('#max'))
+
+            //随机的颜色
+            function getColor(){
+                return 'rgba('+parseInt(Math.random()*255)+','+parseInt(Math.random()*255)+','+parseInt(Math.random()*255)+',1)';
+            }
+        },200);
+
+        //琴键音效
+        var index = 0;
+        var time = 500;
+        var idTwo =  setInterval(function () {
+            //设置琴键高亮
+            if (index >= test.length){
+                $('#onKey .y').css( 'background-color', 'rgba(0,0,0,0.8)');
+                $('#onKey .y').children().css('box-shadow','0px 0px 0px #000');
+                $('#onKey .h').css( 'background-color', 'rgba(250,250,250,0.8)');
+                $('#onKey .h').children().css('box-shadow','0px 0px 0px #FFF');
+                clearInterval(idTwo);
+                clearInterval(idOne);
+            }
+            //几种执行时间
+                    if (reg.test(test[index])){
+                        time = 200;
+                        setMusic(test[index]); //把输入的字符去匹配
+                        index++;
+                    }else if(regtwo.test(test[index])){
+                        time = 2000;
+//                        setMusic(test[index]);
+                        index++;
+                    }else if (test[index] == ' '){
+                        time = 1000;
+//                        setMusic(test[index]);
+                        index++;
+                    }else if (test[index] == 'x'){
+                        time = 200;
+                        setMusic(test[++index]);
+                        index++;
+                    }else {
+                        time = 500;
+                        index++;
+                    }
+        },time);
+    });
+    //对应的音频调用
+function setMusic(nuber) {
+    switch(nuber)
+    {
+        case 'a':
+            lod(0);
+            break;
+        case 'b':
+            lod(1);
+            break;
+        case 'c':
+            lod(2);
+            break;
+        case 'd':
+            lod(3);
+            break;
+        case 'e':
+            lod(4);
+            break;
+        case 'f':
+            lod(5);
+            break;
+        case 'g':
+            lod(6);
+            break;
+        case 'h':
+            lod(7);
+            break;
+        case 'i':
+            lod(8);
+            break;
+        case 'j':
+            lod(9);
+            break;
+        case 'k':
+            lod(10);
+            break;
+        case 'l':
+            lod(11);
+            break;
+        case 'm':
+            lod(12);
+            break;
+        case 'n':
+            lod(13);
+            break;
+        case 'o':
+            lod(14);
+            break;
+        case 'p':
+            lod(15);
+            break;
+        case 'q':
+            lod(16);
+            break;
+        case 'r':
+            lod(17);
+            break;
+        case 's':
+            lod(18);
+            break;
+        case 't':
+            lod(19);
+            break;
+        case 'u':
+            lod(20);
+            break;
+        default:
+            break;
+    }
+}
+function lod (index) {
+    //设置琴键高亮之前先设置会原样
+    $('#onKey .y').css( 'background-color', 'rgba(0,0,0,0.8)');
+    $('#onKey .y').children().css('box-shadow','0px 0px 0px #000');
+    $('#onKey .h').css( 'background-color', 'rgba(250,250,250,0.8)');
+    $('#onKey .h').children().css('box-shadow','0px 0px 0px #FFF');
+
+    $('audio')[index].load();//重新加载音乐
+    $('audio')[index].play();
+
+    //高亮
+    if(index%2 ==0){
+        $('#onKey li').eq(index).css('background-color','rgba(50,50,50,1)');
+//        $('#onKey li').eq(index).children().css('box-shadow','1px 1px 5px #FFF');
+    }else {
+        $('#onKey li').eq(index).css('background-color','rgba(150,150,150,1)');
+//        $('#onKey li').eq(index).children().css('box-shadow','1px 1px 5px #000');
+    }
+    }
+})
+</script>
+</body>
+</html>
